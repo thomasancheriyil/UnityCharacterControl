@@ -1,0 +1,312 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\froman\fcharset0 Times-Roman;\f2\fnil\fcharset0 TrebuchetMS;
+}
+{\colortbl;\red255\green255\blue255;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc4\levelnfcn4\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{lower-alpha\}.}{\leveltext\leveltemplateid1\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc4\levelnfcn4\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{lower-alpha\}.}{\leveltext\leveltemplateid101\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid2}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}}
+\margl1440\margr1440\vieww12840\viewh15540\viewkind1
+\deftab720
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardeftab720\ri0\partightenfactor0
+
+\f0\fs24 \cf0 CS6457 Milestone 1\
+\
+i.\
+\
+Brett Sawyer\
+bsawyer@gatech.edu\
+bsawyer6\
+\
+Deepak Ravindran\
+dravindran3@gatech.edu\
+dravindran3\
+\
+Kamal Shadi\
+kshadi3@gatech.edu\
+kshadi3 \
+\
+Thomas George\
+\
+Bowen Gui\
+\
+ii. \
+\
+Group Milestone Requirements:\
+\
+a.) Basic Physics Interaction - Complete\
+\
+The animation controller for the player was updated while maintaining root motion with a rigid body for basic physics interactions. This rigid body component on player allowed for:\
+(1) interactions with colliders \
+(2) interactions with triggers\
+(3) collider animation during appropriate animations\
+(4) added force combined with animation (case for jumping)\
+\
+b.) Collider animation - Complete \
+\
+Collider animation was achieved by directly modifying the Collider component of the player for \
+(1) crouch - \'91input key c\'92\
+(2) vault - \'91input key v\'92\
+(3) slide - \'91input key b\'92\
+(4) jump - \'91input \'93Jump\'94 in input settings - space\'92\
+\
+Using this approach some minor bugs in vault and slide collider animation affect game feel. This can be improved using curves with appropriate float parameters to provide smooth collider animation instead of abrupt changes. These abrupt changes lead to the appearance the player can slide through the edge of obstacles.\
+\
+c.) Ragdoll Simulation - Complete\
+\
+The rag doll wizard in Unity was used to implement a collider array to allow for rag doll simulation outside of the mecanim animation controller updated in (a). This wizard depended on the model rigging performed via mixamo. The default rag doll wizard was manually updated to improve collider sizing for certain body parts. This is due to the abnormality in the chose avatars body shape.\
+\
+Limitations in the rag doll simulation include:\
+(1) no transition from rag doll back to mecanim animation control. Therefore rag doll simulation is reserved for character death and prompts a level respawn. This is likely the behavior used in the proposed team design project.\
+(2) Some non-physical simulation occurs during rag doll simulation. This is likely due to the user of default joint settings after rag doll collider array creation. This can lead to non-realism in joint movement (i.e. the max range of a joint is non-physical)\
+\
+d.) Game Feel - Complete\
+Team 4 Grads+1 proposed an isometric view, chase game for the final design project. Therefore, quick and real time response is key along with multiple camera angles for the isometric viewer.\
+\
+(1) Real time response control was achieved by combining animation controller work in milestone 1 and lessons learned from the Unity Standard Asset controller. The controller part of the script was adapted from the unity standard asset third person controller. It does not use the blend tree/animations from the standard assets but some of the locomotion functionality is adapted. Like the jump functionality for instance.\
+\
+(2) The physical and emotional target for our game player is quick, somewhat twitchy physical behaviors with an overall sense of urgency to escape a level, avoid obstacles, and outrun enemies. This ties to the 4 Grads+1 back story in that the main player is an over-worked PhD student who may or may not be under the influence from mind altering substances. This drives the twitchy and urgency characteristics in the character.\
+(3) The design team used this milestone to overhaul the entire animation controller to support the aforementioned game feel. The goal was to provide the responsiveness needed for a chase type of game but to stay within the limits of a true physical movement.  This is especially true for turning in the proposed isometric type view game. Multiple camera angles are provided for the player where WASD moves the player game object with respect to the current view. Complete overhaul was required for this game feel since all design team members implemented a traditional 3rd person viewer animation controller in previous work. The standard assets animation controller was used as reference to impose inertia type blend trees for turning within the iso-viewer.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardeftab720\ri0\partightenfactor0
+
+\b \cf0 Scenes can be switched by numeral keys 1, 2, 3, 4.\
+Camera is controlled by keys 6,7,8,9.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardeftab720\ri0\partightenfactor0
+
+\b0 \cf0 \
+\
+Individual Milestone Requirements:\
+\
+Brett Sawyer - Industrial Mayhem\
+a.) Five unique geometry nodes - Complete \
+The five simple physics components/geometry nodes are delineated by Unity 3D physics capabilities including:\
+(1) Simple collider on a rigid body to allow interaction between game player and object. In this case the simple collider is a cardboard box made from a Unite cube primitive with a mass of 1 kg. When in contact with the 80 kg game player object an appropriate collision between the objects occurs.\
+(2) Trigger collider with the game player object that results in an added force to rigid body objects. In this case a collider game object is set to trigger environment behavior. When the player enters the trigger region 10 kg drums are pushed by and added force to enable these objects to start rolling toward the player down a set of stairs.\
+(3) Cloth physics. In this case cloth physic components are assigned to a double plane game object. This said game object is used to simulate a wind force in the environment due to HVAC characteristic of the proposed industrial setting \
+(4) Soft body physics. A soft body, inelastic collision object is simulated using cloth physics combined with rigid body physics. In this case a rigid body is set inside a sphere primitive with painted cloth constraints. This allows for soft body type collisions when coming in contact with other rigid body components in the environment.\
+(5) Rigid body added force at contact. In this case to support the aforementioned game feel of urgency or mayhem. Rigid body components on the player and a table were used to with colliders to allow the player to flip these objects. This is achieved by adding a force to the table rigid body at the point of contact between this rigid body and the player.\
+\
+b.) Two compound objects - Complete\
+The two compound objects consisted of a hinge joint physics component. The implementations of these hinge joints differ in behavior.\
+(1) Spring hinge enabled joint. In this case a spring hinge joint is setup between a door post and swinging gate. This is typical of the industrial setting where these signs can provide access control\'97motivation for the spring back behavior.\
+(2) Motor hinge enabled joint. In this case a motor enabled joint was used to implement a large industrial fan. This fan is made up of five capsule collider primitives where the project hierarchy is used to maintain fan like behavior of the rotating capsule objects. \
+\
+c.) Variable terrain - Complete\
+Variable terrain was implemented using the ProBuilder basic asset available for scene development in Unity. Ramps and platforms are implemented using this GUI scene builder software. Due to the needed overhaul of the animation controller and known bugs with the jump function of the animation controller, graduated steps are not included to improve game feel and will be updated in subsequent controller work and debugging.\
+\
+d.) Material sounds - Complete\
+Multiple audio sources throughout the industrial environment are used to improve player interaction with a activity rich game garden environment. \
+\
+Due to the chosen theme, surfaces are limited to concrete and grated steel platforms. When the player navigates the grated platforms and appropriated footstep audio source is enabled.\
+\
+Other audio sources are tied to geometry nodes listed above. For example, when the player flips the table a loud wood knocking audio is enabled. Furthermore, when the player triggers a trap of gas drums rolling down the steps, and appropriated steel drum rolling audio is enabled.\
+\
+Note all sounds bytes were acquired using www.freesound.org\
+\
+e.) Game feel - Complete\
+As mentioned above, the chosen theme defined interactions between the player and the industrial environment. This game feel was enhanced by high density interaction through the garden level and the player. The feeling of the industrial environment is conveyed to the user through physics animations that combine large HVAC system simulation with sound components. The garden feel object layout is such that the order of an industrial environment is conveyed. In doing so, all objects are interactive with appropriate physics reactions. This includes table flipping to convey the sense of mayhem in the player.  \
+\
+Deepak Ravindran - Medieval Mayhem \
+a) 5 or more unique actors - COMPLETED.  \
+I have a few boxes(counting all of them as 1) and a keg with hard rigid bodies. I have a sphere with a rigid body on the top of a platform and it can by pushed(Will roll down the ramp). I have a joint based swing system with a platform suspended by joined cylinders(like a chain). Can be pushed around.\
+\
+b) At least 2 compound objects with joints - COMPLETED\
+I have a suspension bridge type system which is made using 8-9 plans connected wth hinge joints to one another. WHen player moves on it, it will react to the player's mass and react accordingly. I have a double door entrance which are both connected to their corresponding walls using a hinge joint. THe player can walk into it and it will rotate around the hinge and open. It has a spring value set, so it will revert back to it's original position. The swing system mentioned in point 1. 5 cylinders connected to each other with hinge joints and one patform connected to the bottommost cylinder using a fixed joint.\
+\
+c) Variable height terrain - COMPLETED\
+The player can climb some stairs, a walkway and a ramp to a higher platform. \
+\
+d) At least 3 material sounds with trigers - COMPLETED\
+I added multiple material sounds for different surfaces. Player starts on a wooded platform(with a unique sound), then walks on a carpeted path(with another unique sound). When the player walks through the door, a door opening sound is triggered. The player then enters a wet looking muddy area(with unique wet mud sounds). FInally the player can climb a wooden platform and the wood sound is again triggered.\
+\
+e) Game feel - COMPLETED\
+I added some triggers for the ragdoll effect. The player starts on a platform above some animated water. If the player falls into the water the ragdoll death is triggered. Inside the walled area, I have a rotating fan type trap that is animating. If the player runs into that trap he will trigger the ragdoll animation and die. I added some dust particle effects to the character's feet when he runs on mud.   \
+\
+\
+Kamal Shadi \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardeftab720\li720\fi-360\ri0\partightenfactor0
+\ls1\ilvl0\cf0 a.)	Five unique geometry nodes \'96 Complete\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardeftab720\li720\ri0\partightenfactor0
+\cf0 I have a ball that rolls upon collision. A flag which has a cloth dynamic. A rigid glass body box. A pivoted column that hinges on its base upon collision. Also scenes are filled with natural sceneries.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardeftab720\li720\fi-360\ri0\partightenfactor0
+\ls2\ilvl0\cf0 b.)	Two compound objects - Complete\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardeftab720\li720\ri0\partightenfactor0
+\cf0 A flag and a pivoted column using hinges are in the scene\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardeftab720\ri0\partightenfactor0
+\cf0 c.) Variable terrain - Complete\
+d.) Material sounds \'96 Complete\
+- Background bird\
+- Sound of collision to the glass box\
+- Sound of swaying column\
+- Sound of water splash once the player walks on the river\
+e.) Game feel - Complete\
+Animated water with a footstep sound that is triggered by player walk. Collisions to rolling ball and gall objects. Interaction with flag and swiveling columns. With all these I have tried to fill the garden of my scene.\
+\
+Thomas George Ancheriyil \'96 Fantasy Room\
+Note: 
+\b The ragdoll physics does not work in my scene because of some unexpected behavior of the character and so I have removed it from my scene.\
+
+\b0 a.) Unique geometry nodes - Complete \
+The five simple physics components/geometry nodes are delineated by Unity 3D physics capabilities including:\
+(1) Simple collider on a rigid body to allow interaction between game player and object. In this case the simple collider is two cubes that are attached to each other using fixed joint. When the character runs through the cube, they split apart. \
+(2) A rigid body cylinder\
+(3) Cloth physics:  Cloth physics has been simulated by a curtain to the left of the scene. When the character passes through the curtain, it will waver accordingly. Reacts to wind as well.\
+(4) A set of cubes that are attached using fixed joints.\
+\
+b.) Two compound objects - Complete\
+The two compound objects consisted of a hinge joint physics component. \
+(1) Hinge joint: A Hinge joint is set up for the door to open and close. The door can be opened or closed by pressing 
+\b \'93F\'94
+\b0  key.\
+(2) Fixed joint: A fixed joint has been set up for two different set of cubes. A set of two cubes to the left can be brought apart easily by force. A set of three cubes to the right, attached using fixed joints are strong and cannot be broken.\
+\
+c.) Variable terrain - Complete\
+Variable terrain was created using planes that are placed at an angle. This will permit to check for the jump animations and also the sound effects of jump.\
+\
+d.) Material sounds - Complete\
+Audio sounds were used for opening and closing the doors. Sound effects have also been implemented for three different terrains. Most of the terrain is wood and gives the wood sound. The section of terrain before the ramp is metal and gives the appropriate sound. The section of terrain after opening the door is concrete.\
+\
+Note all sounds bytes were acquired using www.freesound.org\
+\
+e.) Game feel - Complete\
+\pard\pardeftab720\ri0\sl259\slmult1\sa160\partightenfactor0
+\cf0 As mentioned above, sound effects for different terrains have been implemented. This gives a real feel for the terrain types.
+\f1\fs22 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardeftab720\ri0\partightenfactor0
+
+\f0\fs24 \cf0 \
+Bowen Gui\
+a.) Five unique geometry nodes\
+b.) Two compound objects\
+c.) Variable terrain\
+d.) Material sounds\
+e.) Game feel 
+\f2\fs26 \
+\
+
+\f0\fs24 iii. \
+\
+Group Resources: (Deepak to update based on animation controller work)\
+\
+Individual Resources:\
+\
+Brett Resources - Industrial Mayhem\
+\
+Resources to achieve individual milestone requirements include:\
+\
+a.) ProBuilder Basic 2.5.0f0 plug-in for unity available in the Asset store. This plug-in provides a GUI for level/environment creation within the Unity environment.\
+b.) Industrial Material package asset for unity published by VDGames available in the asset store. This material and texture package was used to implemented some custom materials in the environment to enhance game feel.\
+c.) LuckiestGuy font available in the Survivor Shooter package available on the Unity Asset Store\
+d.) Audio files from freesound.org available for free download including:\
+	i.) 64456__nicstage__heatvent.wav\
+	ii.) f215475__joenovice__cardboardboxes-01.wav\
+	iii.) 250682__robinhood76__05466-slowly-rolling-can-looping.wav\
+	iv.) 321086__benagain__open-door-1.wav\
+	v.) 340906__passairmangrace__tablehit-mono-bip.wav\
+	vi.) 180650__mmaruska__footstepsonadock.wav\
+\
+Deepak Resources - Medieval Mayhem\
+\
+Free Assets used:\
+\
+Water Flow Free (Animated water texture)\
+https://www.assetstore.unity3d.com/en/#!/content/26434\
+\
+Ultimate Fantasy Creator LITE ( For gates, walls and other environmental props)\
+https://www.assetstore.unity3d.com/en/#!/content/45579\
+\
+Dungeon Creator Kit LITE (For random objects in the scene)\
+https://www.assetstore.unity3d.com/en/#!/content/25575\
+\
+Simple Physical Shaders (Textures for wood, mud and sand)\
+https://www.assetstore.unity3d.com/en/#!/content/22143\
+\
+Angel Statue (Random showpiece asset)\
+https://www.assetstore.unity3d.com/en/#!/content/27594\
+\
+Free footsteps system (Only used the footstep sounds and some ground texture. Did not use the scripts/plugin)\
+https://www.assetstore.unity3d.com/en/#!/content/47967\
+\
+Kamal Resources -\
+\
+Thomas Resources-\
+Shroud substance (for cloth material)\
+https://www.assetstore.unity3d.com/en/#!/content/3962\
+\
+Locker Room Props:\
+https://www.assetstore.unity3d.com/en/#!/content/3355\
+\
+Horror Hospital(for door and frame)\
+https://www.assetstore.unity3d.com/en/#!/content/44045\
+\
+Bag chair:\
+https://www.assetstore.unity3d.com/en/#!/content/27956\
+\
+Door sounds:\
+https://www.freesoundeffects.com\
+\
+Free footsteps system:\
+https://www.assetstore.unity3d.com/en/#!/content/47967\
+\
+\
+Bowen Resources -\
+\
+iv. Install Instructions - Scene management required for milestone group submission (Kamal)\
+\
+v. Game Play Instructions\
+\
+All player animation can be tested using the key map below\
+\
+W - forward\
+S - back\
+A - left\
+D - right\
+V - vault (collider animation)\
+B - slide (collider animation)\
+\'91Space\'92 - jump (collider animation)\
+C - crouch enable (collider animation)\
+\
+Individual Game Player Instructions \
+\
+Brett Sawyer - Industrial Mayhem\
+All physics object and game feel components described above can be tested/reviewed using simple WASD navigation in the industrial garden environment.\
+\
+(1) Simple collider - simply run into cardboard boxes directly behind player\
+(2) Trigger collider - walk to bottom of left ramp. this triggers deathly drums to roll down the ramp. If contacted by drums rag doll will be simulated.\
+(3) Cloth physics - a game feel physics component to simulate large industrial HVAC with blowing ribbons. Cloth physics also included in soft body physics object (see below)\
+(4) Soft body - observe the trash cans through the environment (greenish/blue trash bag texture) and soft body reaction to rigid body trash can can be observed. Run into the rigid body trashcan and watch how this soft body reacts with other rigid bodies\
+(5) AddForce Collider - run into any table in the level and at that contact point the player will lift the table (note: not shown in animation for now) and the rigid body table will be lifted and/or flipped\
+\
+Compound physics components observed in the swinging door and fan object. The swinging door reacts when the game player object walks through the swinging controlled access (red color) gate\
+\
+Variable terrain can be navigated using WASD controls\
+\
+Interactive sound sources are included throughout the industrial garden\
+\
+Game feel is enhanced through appropriate sounds and physics components/nodes. Careful thought was given to the physic objects to convey a sense of cohesiveness. The player emotion of urgency is conveyed by being able to basically destroy the level.\
+\
+Deepak Ravindran - Medieval Mayhem \
+All physics object and game feel components described above can be tested/reviewed using simple WASD navigation in the industrial garden environment.\
+\
+(1) Simple collider - simply run into wooden boxes and kegs inside the walled area. Push the sphere on the top platform to make it roll down.\
+(2) Trigger collider \'96 Jump into the water, run into the rotating fan(trigger ragdoll and die). Walk through the door to trigger sound.\
+(3) Cloth physics \'96 Used for the two flags attached to the entrance walls. Only used here as a visual addition. \
+(4) Compound physics components observed in the swinging door, suspension bridge and swing system. The swinging door reacts when the game player object walks through it. The bridge shakes and reacts based on the mass of the player. The swing system moves around when the player jumps on it or runs into it. \
+\
+Variable terrain can be navigated using WASD controls\
+\
+Interactive sound sources are included throughout the medieval scene. Different floor materials cause different sounds.\
+\
+Game feel is enhanced through appropriate sounds and physics components/nodes. Added some particle effects as dust trails, to enhance the effect of running on mud.\
+\
+Kamal Shadi \
+Thomas George\
+Bowen Gui\
+\
+\
+vi. Scene file is the main file that should be opened first in Unity - Scene management required for milestone group submission. Scene uploaded first is controlled by scene manager. Order of scenes is:\
+1-Kamal\
+2-Thomas (long load time)\
+3-Brett\
+4-Deepak\
+}
